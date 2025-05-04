@@ -1,6 +1,5 @@
 7 Day DevOps Challenge
 
-
 Change the permissions of your .pem file:
 
 icacls "nextwork-keypair.pem" /reset

@@ -89,4 +89,30 @@ triggers:
       resources: ["arn:aws:codecommit:ap-south-1:905630096700:nextwork-web-project"]
 
 
+5) CloudFormation template: nextworkwebapp.yaml -  important
+
+git add .
+git commit -m "Adding nextworkwebapp.yml file"
+git push
+
+
+6) Getting an error CodeDeploy agent was not able to receive the lifecycle event
+
+https://stackoverflow.com/questions/73861102/before-install-codedeploy-agent-was-not-able-to-receive-the-lifecycle-event-ch
+
+CodeDeploy agent was not able to receive the lifecycle event. Check the CodeDeploy agent logs on your host and make sure the agent is running and can connect to the CodeDeploy server. error
+
+
+AWS CodeBuild is successful but CodeDeploy isn't showing any errors, it could mean the deployment is stuck or not initiating correctly.
+
+
+7)Test Pipeline with Code Change:
+
+Commit and push the changes to your GitHub repository using the following commands
+
+git add .
+git commit -m "Update index.jsp with a new line to test CodePipeline"
+git push origin master
+
+
 

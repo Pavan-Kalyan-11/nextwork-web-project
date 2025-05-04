@@ -1,4 +1,4 @@
-
+7 Day DevOps Challenge
 
 
 Change the permissions of your .pem file:
@@ -50,6 +50,43 @@ Troubleshooted the connection access by searching CloudWatch logs and updated th
 CodeBuildCodeConnectionsSourceCredentialsPolicy-nextwork-devops-cicd-ap-south-1-905630096700   ----- policy by manually changing the connection in the Json.
 
 
+To automatically trigger a build whenever you push code to your repository, you can integrate AWS CodeBuild with AWS CodePipeline or GitHub Webhooks. Here’s how you can modify your buildspec.yml to include a build trigger:
+
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+  pre_build:
+    commands:
+      - echo Initializing environment
+      - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain nextwork --domain-owner 905630096700 --region ap-south-1 --query authorizationToken --output text`
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn -s settings.xml compile
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - mvn -s settings.xml package
+
+artifacts:
+  files:
+    - target/nextwork-web-project.war
+  discard-paths: no
+
+cache:
+  paths:
+    - ~/.m2/repository
+
+triggers:
+  - type: EVENT
+    eventPattern:
+      source: ["aws.codecommit"]
+      detail-type: ["CodeCommit Repository State Change"]
+      resources: ["arn:aws:codecommit:ap-south-1:905630096700:nextwork-web-project"]
 
 
 
